@@ -13,7 +13,6 @@ coloredlogs==15.0.1
 ctranslate2==4.5.0
 decorator==4.4.2
 deep-translator==1.11.4
-dl-translate==0.3.1
 faster-whisper==1.0.3
 ffmpeg-python==0.2.0
 filelock==3.16.1
@@ -29,7 +28,6 @@ hpack==3.0.0
 hstspreload==2024.10.1
 httpcore==0.9.1
 httpx==0.13.3
-huggingface-hub==0.26.1
 humanfriendly==10.0
 hyperframe==5.2.0
 idna
