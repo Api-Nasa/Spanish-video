@@ -11,6 +11,7 @@ ctranslate2==4.5.0
 decorator==4.4.2
 deep-translator==1.11.4
 faster-whisper==1.0.3
+ffmpeg==1.4
 ffmpeg-python==0.2.0
 filelock==3.16.1
 Flask==3.0.3
