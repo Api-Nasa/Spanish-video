@@ -374,7 +374,7 @@ def download():
     file_path = 'output_video.mp4'
     return send_file(file_path, as_attachment=True)
      
-     
+   
  
 @app.route('/informacion')
 def informacion():
