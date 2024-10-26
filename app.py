@@ -8,7 +8,6 @@ from moviepy.editor import *
 from deep_translator import GoogleTranslator  
 import os
 # pip install git+https://github.com/openai/whisper.git
-import whisper
 from faster_whisper import WhisperModel
 from speechify.speechify import  SpeechifyAPI
 import os  
@@ -17,16 +16,16 @@ import ffmpeg
 from pydub import AudioSegment
 import io
 import requests
-import dl_translate as dlt
+
 
 
 
 
 app = Flask(__name__)
 
-# Crear una instancia the Speechify API and transate dlt
+# Crear una instancia the Speechify API 
 speechify_api = SpeechifyAPI()
-mt = dlt.TranslationModel(device="auto") # ("cpu" or "gpu")  Slow when you load it for the first time 
+
 lista_de_eventos=[]
 lista_de_errores=[]
 
