@@ -128,9 +128,11 @@ def traducir_audio_youtube():
         }],
         'noplaylist': True,
         'quiet': True,
+        'cookiefile': "yt.json",
         'nocontinue': True,  # No continuar desde archivos existentes
         'rm_cachedir': True  # Eliminar archivos en caché
     }
+    
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
