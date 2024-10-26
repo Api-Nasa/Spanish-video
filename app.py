@@ -7,7 +7,6 @@ from moviepy.editor import VideoFileClip, AudioFileClip,concatenate_audioclips,C
 from moviepy.editor import *
 from deep_translator import GoogleTranslator  
 import os
-# pip install git+https://github.com/openai/whisper.git
 from faster_whisper import WhisperModel
 from speechify.speechify import  SpeechifyAPI
 import os  
