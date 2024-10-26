@@ -49,7 +49,7 @@ networkx==3.4.1
 numba==0.60.0
 numpy==2.0.2
 onnxruntime==1.19.2
-openai-whisper @ git+https://github.com/openai/whisper.git@25639fc17ddc013d56c594bfbf7644f2185fad84
+# openai-whisper @ git+https://github.com/openai/whisper.git@25639fc17ddc013d56c594bfbf7644f2185fad84
 packaging==24.1
 pillow==11.0.0
 platformdirs==4.3.6
