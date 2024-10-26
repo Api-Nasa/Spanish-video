@@ -128,7 +128,7 @@ def traducir_audio_youtube():
         }],
         'noplaylist': True,
         'quiet': True,
-        'cookiefile': "yt.json",
+        'cookiefile': "yt.txt",
         'nocontinue': True,  # No continuar desde archivos existentes
         'rm_cachedir': True  # Eliminar archivos en caché
     }
