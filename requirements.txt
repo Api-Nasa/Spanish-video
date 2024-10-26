@@ -32,7 +32,7 @@ httpx==0.13.3
 huggingface-hub==0.26.1
 humanfriendly==10.0
 hyperframe==5.2.0
-idna==3.7
+idna
 imageio==2.36.0
 imageio-ffmpeg==0.5.1
 itsdangerous==2.2.0
