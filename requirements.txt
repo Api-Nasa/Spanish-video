@@ -17,6 +17,7 @@ Flask==3.0.3
 flatbuffers==24.3.25
 fsspec==2024.10.0
 future==1.0.0
+gunicorn==23.0.0
 huggingface-hub==0.26.1
 humanfriendly==10.0
 idna==3.10
