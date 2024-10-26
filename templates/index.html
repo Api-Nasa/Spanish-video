@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video YouTube voz española</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body.light-mode {
+            background-color: #b6b3b3;
+            color: #000;
+        }
+        body.dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+        #tiempo {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 1, 2em;
+        }
+        li:last-child {   color: yellow; }
+    </style>
+</head>
+<body class="dark-mode">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Video YouTube con voz española</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <button class="btn btn-secondary mb-3" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+                <button class="btn btn-secondary mb-3" onclick="reload()">Reload</button>
+                <div id="zona_marcador" style="display: none">
+                    <h2>Marcador de Tiempos</h2>
+                    <div id="tiempo">00:00:00</div>
+                </div>
+                <form id="youtubeForm" class="mb-4">
+                    <div class="form-group">
+                        <label for="url">URL de YouTube:</label>
+                        <input style="margin-bottom: 1em;"  type="text" id="url" name="url" class="form-control" required autocomplete="off">
+                        <input type="radio" id="hombre" name="sexo" required value="hombre">
+                        <label for="hombre">Seleccionar Voz Masculina</label><br>
+                        <input type="radio" id="mujer" name="sexo" value="mujer">
+                        <label for="mujer">Seleccionar Voz Femenina</label><br>
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary btn-block"
+                     hx-get="/informacion"
+                     hx-trigger="every 5s"
+                     hx-target="#respuesta_servidor"
+                     hx-swap="innerHTML">Descargar y convertir</button>
+                </form>
+                <div id="respuesta_servidor"></div>
+                <div id="resultado" style="display: none">
+                    <h2>Video Procesado</h2>
+                    <video id="video" controls width="100%" style="max-height: 70vh;"></video>
+                    <a id="downloadLink" class="btn btn-success mt-3" href="#" download="funciona.mp4" style="margin-bottom: 3em;">Descargar Video</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleDarkMode() {
+            var body = document.body;
+            body.classList.toggle("dark-mode");
+            body.classList.toggle("light-mode");
+        }
+
+        document.getElementById("youtubeForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            startTimer();
+            const url = document.getElementById("url").value;
+            const sexo = document.querySelector('input[name="sexo"]:checked').value;
+            document.getElementById("resultado").style.display = "none";
+            document.getElementById("youtubeForm").style.display = "none";
+            document.getElementById("downloadLink").href = "";
+            document.getElementById("video").src = "";
+            document.getElementById("zona_marcador").style.display = "block";
+            fetch("/traducir", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ url: url, sexo: sexo }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data.data);
+                
+                if (data.data=="ok"){
+                document.getElementById("downloadLink").href = "{{ url_for('download') }}";
+                document.getElementById("video").src = "{{ url_for('download') }}";
+                document.getElementById("resultado").style.display = "block";
+                document.getElementById("url").value = "";
+                clearInterval(timerInterval);
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }else{
+               
+                console.error("Error")
+                document.getElementById("resultado").style.display = "none";
+                document.getElementById("youtubeForm").style.display = "none";
+                document.getElementById("downloadLink").href = "";
+                document.getElementById("video").src = "";
+               
+                //reload();
+
+            }
+            })
+            .catch((error) => {
+                //alert("Error: " + error + ".... Se abortó el proceso. Se reiniciará la App");
+                console.error("Error:", error);
+               
+                //reload();
+            });
+        });
+
+        var timerInterval;
+        var totalSeconds = 0;
+
+        function startTimer() {
+            totalSeconds = 0;
+            clearInterval(timerInterval);
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            totalSeconds++;
+            var hours = Math.floor(totalSeconds / 3600);
+            var minutes = Math.floor((totalSeconds % 3600) / 60);
+            var seconds = totalSeconds % 60;
+
+            var timeString = 
+                (hours < 10 ? "0" + hours : hours) + ":" + 
+                (minutes < 10 ? "0" + minutes : minutes) + ":" + 
+                (seconds < 10 ? "0" + seconds : seconds);
+
+            document.getElementById("tiempo").textContent = timeString;
+        }
+
+        function reload() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

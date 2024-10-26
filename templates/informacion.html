@@ -1,0 +1,26 @@
+{% if lista_de_errores |length > 0 %}
+<script>
+     document.getElementById("zona_marcador").style.display = "none";
+</script>
+{% endif %}
+
+<div id="listas" class="padre-flex">
+
+<div id="eventos" class="hijo-flex">
+<ul>
+{% for evento in lista_de_eventos %}
+<li>{{ hora }}{{evento}}</li>
+{% endfor %}
+</ul>
+</div>
+
+<div id="errores" class="hijo-flex">
+    <ul onchange="ocultar_marcador()">
+    {% for error in lista_de_errores %}
+    <li style="color:red">{{error}}</li>
+    {% endfor %}
+    </ul>
+</div>
+
+</div>
+
